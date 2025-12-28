@@ -1,0 +1,187 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ==========================================
+// TABLA 1: CATEGORIAS
+// ==========================================
+model Categoria {
+  id            String  @id @default(cuid())
+  nombre        String
+  icono         String
+  color         String
+  orden         Int
+  tipoCategoria String // "patrimonio", "servicio", "emergencia"
+  descripcion   String?
+
+  // Relaciones
+  sitios Sitio[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ==========================================
+// TABLA 2: SITIOS (La más importante)
+// ==========================================
+model Sitio {
+  id          String    @id @default(cuid())
+  categoriaId String
+  categoria   Categoria @relation(fields: [categoriaId], references: [id])
+  tipoSitio   String // "patrimonio", "servicio", "emergencia"
+
+  // Identificación
+  slug                String  @unique
+  nombre              String
+  descripcionCorta    String  @db.VarChar(200)
+  descripcionCompleta String? @db.Text
+
+  // Ubicación
+  direccion  String
+  latitud    Float
+  longitud   Float
+  referencia String?
+  distrito   String?
+
+  // Contacto
+  telefono           String?
+  telefonoEmergencia String?
+  email              String?
+  sitioWeb           String?
+  whatsapp           String?
+  facebook           String?
+  instagram          String?
+
+  // === CAMPOS PARA PATRIMONIO ===
+  // Horarios y precios
+  horario             String?
+  precioGeneral       Float?
+  precioEstudiante    Float?
+  precioNino          Float?
+  tiempoVisitaMinutos Int?
+
+  // Imágenes históricas
+  imagenPrincipal          String
+  imagenPrincipalAntigua   String?
+  anioImagenAntigua        Int?
+  fuenteImagenAntigua      String?
+  descripcionImagenAntigua String? @db.Text
+  imagenesGaleriaActuales  Json?
+  imagenesGaleriaAntiguas  Json?
+
+  // Información histórica
+  epocaHistorica         String?
+  anioConstruccion       Int?
+  estadoConservacion     String?
+  declaratoriaPatrimonio String?
+  datosHistoricos        String? @db.Text
+
+  // === CAMPOS PARA SERVICIOS ===
+  rangoPrecios       String?
+  especialidadCocina String?
+  tipoAlojamiento    String?
+  numeroHabitaciones Int?
+  capacidadPersonas  Int?
+
+  // Servicios disponibles
+  tieneEstacionamiento Boolean @default(false)
+  aceptaTarjetas       Boolean @default(false)
+  tieneWifi            Boolean @default(false)
+  esAccesible          Boolean @default(false)
+  serviciosAdicionales Json?
+
+  // === CAMPOS PARA EMERGENCIAS ===
+  atencion24h           Boolean @default(false)
+  serviciosEmergencia   Json?
+  especialidadesMedicas Json?
+
+  // === CAMPOS COMUNES ===
+  destacado      Boolean @default(false)
+  visible        Boolean @default(true)
+  verificado     Boolean @default(false)
+  orden          Int     @default(0)
+  visitasTotales Int     @default(0)
+
+  // Relaciones
+  sitiosEnRutas SitioRuta[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([categoriaId])
+  @@index([tipoSitio])
+  @@index([slug])
+  @@index([destacado])
+  @@index([latitud, longitud])
+}
+
+// ==========================================
+// TABLA 3: RUTAS
+// ==========================================
+model Ruta {
+  id          String @id @default(cuid())
+  slug        String @unique
+  nombre      String
+  descripcion String @db.Text
+
+  // Características
+  duracionHoras Float
+  distanciaKm   Float
+  dificultad    String // "facil", "moderada", "dificil"
+  tipoRuta      String // "a_pie", "vehicular", "mixta"
+
+  // Información adicional
+  mejorEpoca      String?
+  puntoInicio     String
+  puntoFin        String
+  recomendaciones String? @db.Text
+  queTraer        Json?
+
+  // Imágenes
+  imagenPortada String
+  imagenesRuta  Json?
+
+  // Metadatos
+  destacada Boolean @default(false)
+  visible   Boolean @default(true)
+  orden     Int     @default(0)
+
+  // Relaciones
+  sitiosEnRuta SitioRuta[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([slug])
+  @@index([destacada])
+}
+
+// ==========================================
+// TABLA 4: SITIO_RUTA (Tabla intermedia)
+// ==========================================
+model SitioRuta {
+  id      String @id @default(cuid())
+  rutaId  String
+  sitioId String
+
+  ruta  Ruta  @relation(fields: [rutaId], references: [id], onDelete: Cascade)
+  sitio Sitio @relation(fields: [sitioId], references: [id], onDelete: Cascade)
+
+  orden                Int // Posición en la ruta
+  tiempoPermanenciaMin Int // Tiempo sugerido
+  notas                String? @db.Text
+
+  createdAt DateTime @default(now())
+
+  @@unique([rutaId, sitioId])
+  @@index([rutaId])
+  @@index([sitioId])
+}

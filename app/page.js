@@ -1,65 +1,117 @@
-import Image from "next/image";
+import Link from 'next/link';
+import { MapPin, Church, Building2, Route, Shield } from 'lucide-react';
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.js file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div>
+      {/* Hero Section */}
+      <section className="relative bg-gradient-to-r from-amber-900 to-amber-700 text-white">
+        <div className="container mx-auto px-4 py-20 lg:py-32">
+          <div className="max-w-3xl">
+            <h1 className="text-4xl lg:text-6xl font-bold mb-6">
+              Descubre el Patrimonio Cultural de Ayacucho
+            </h1>
+            <p className="text-xl lg:text-2xl mb-8 text-amber-100">
+              Explora iglesias coloniales, museos, sitios arqueológicos y la rica historia de Huamanga
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <Link 
+                href="/sitios"
+                className="px-8 py-4 bg-white text-amber-900 rounded-lg font-semibold hover:bg-amber-50 transition"
+              >
+                Explorar Sitios
+              </Link>
+              <Link 
+                href="/mapa"
+                className="px-8 py-4 bg-amber-800 text-white rounded-lg font-semibold hover:bg-amber-900 transition border-2 border-white"
+              >
+                Ver Mapa Interactivo
+              </Link>
+            </div>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* Categorías */}
+      <section className="container mx-auto px-4 py-16">
+        <h2 className="text-3xl font-bold text-center mb-12">
+          Explora por Categoría
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <Link href="/sitios?tipo=patrimonio" className="group">
+            <div className="bg-amber-50 p-8 rounded-xl border-2 border-amber-200 hover:border-amber-400 transition text-center">
+              <Church size={48} className="mx-auto mb-4 text-amber-700 group-hover:scale-110 transition" />
+              <h3 className="text-xl font-bold mb-2">Patrimonio</h3>
+              <p className="text-gray-600 text-sm">Iglesias, museos y sitios históricos</p>
+            </div>
+          </Link>
+
+          <Link href="/servicios" className="group">
+            <div className="bg-blue-50 p-8 rounded-xl border-2 border-blue-200 hover:border-blue-400 transition text-center">
+              <Building2 size={48} className="mx-auto mb-4 text-blue-700 group-hover:scale-110 transition" />
+              <h3 className="text-xl font-bold mb-2">Servicios</h3>
+              <p className="text-gray-600 text-sm">Hoteles, restaurantes y más</p>
+            </div>
+          </Link>
+
+          <Link href="/rutas" className="group">
+            <div className="bg-green-50 p-8 rounded-xl border-2 border-green-200 hover:border-green-400 transition text-center">
+              <Route size={48} className="mx-auto mb-4 text-green-700 group-hover:scale-110 transition" />
+              <h3 className="text-xl font-bold mb-2">Rutas</h3>
+              <p className="text-gray-600 text-sm">Recorridos temáticos sugeridos</p>
+            </div>
+          </Link>
+
+          <Link href="/emergencias" className="group">
+            <div className="bg-red-50 p-8 rounded-xl border-2 border-red-200 hover:border-red-400 transition text-center">
+              <Shield size={48} className="mx-auto mb-4 text-red-700 group-hover:scale-110 transition" />
+              <h3 className="text-xl font-bold mb-2">Emergencias</h3>
+              <p className="text-gray-600 text-sm">Información de contactos útiles</p>
+            </div>
+          </Link>
         </div>
-      </main>
+      </section>
+
+      {/* Estadísticas */}
+      <section className="bg-amber-900 text-white py-16">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+            <div>
+              <div className="text-4xl font-bold mb-2">11+</div>
+              <div className="text-amber-200">Sitios Registrados</div>
+            </div>
+            <div>
+              <div className="text-4xl font-bold mb-2">12</div>
+              <div className="text-amber-200">Categorías</div>
+            </div>
+            <div>
+              <div className="text-4xl font-bold mb-2">1+</div>
+              <div className="text-amber-200">Rutas Temáticas</div>
+            </div>
+            <div>
+              <div className="text-4xl font-bold mb-2">5</div>
+              <div className="text-amber-200">Sitios Patrimoniales</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Final */}
+      <section className="container mx-auto px-4 py-16 text-center">
+        <h2 className="text-3xl font-bold mb-4">
+          ¿Listo para explorar Ayacucho?
+        </h2>
+        <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+          Toda la información que necesitas para descubrir el patrimonio cultural de Huamanga
+        </p>
+        <Link 
+          href="/mapa"
+          className="inline-flex items-center gap-2 px-8 py-4 bg-amber-700 text-white rounded-lg font-semibold hover:bg-amber-800 transition text-lg"
+        >
+          <MapPin size={24} />
+          Abrir Mapa Interactivo
+        </Link>
+      </section>
     </div>
   );
 }

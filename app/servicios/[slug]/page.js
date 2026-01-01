@@ -1,22 +1,31 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { 
-  Clock, MapPin, Phone, Mail, Globe, ArrowLeft,
-  Wifi, CreditCard, Car, Check
-} from 'lucide-react';
-import Button from '@/components/ui/Button';
+import { Clock, MapPin, ArrowLeft } from 'lucide-react';
 
+import Button from '@/components/ui/Button';
+import BotonFavorito from '@/components/sitios/BotonFavorito';
+
+/* ================================
+   Obtener servicio por slug
+================================ */
 async function getServicio(slug) {
-  const res = await fetch(`http://localhost:3000/api/sitios/${slug}`, {
-    cache: 'no-store'
-  });
+  const res = await fetch(
+    `http://localhost:3000/api/sitios/${slug}`,
+    { cache: 'no-store' }
+  );
 
   if (!res.ok) return null;
   return res.json();
 }
 
-export default async function ServicioDetallePage({ params }) {
-  const { slug } = await params;  // ✅ Correcto
+/* ================================
+   Página detalle servicio
+================================ */
+export default async function ServicioDetallePage(props) {
+  // ✅ FIX NEXT.JS 16
+  const params = await props.params;
+  const { slug } = params;
+
   const servicio = await getServicio(slug);
 
   if (!servicio || servicio.tipoSitio !== 'servicio') {
@@ -25,16 +34,17 @@ export default async function ServicioDetallePage({ params }) {
 
   return (
     <div>
-      {/* Header con imagen */}
+      {/* ================= HEADER ================= */}
       <div className="relative h-96 bg-gray-900">
-        <img 
+        <img
           src={servicio.imagenPrincipal}
           alt={servicio.nombre}
           className="w-full h-full object-cover opacity-80"
         />
+
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent">
           <div className="container mx-auto px-4 h-full flex flex-col justify-end pb-8">
-            <Link 
+            <Link
               href="/servicios"
               className="text-white flex items-center gap-2 mb-4 hover:text-blue-300 transition"
             >
@@ -42,7 +52,7 @@ export default async function ServicioDetallePage({ params }) {
               Volver a servicios
             </Link>
 
-            <div 
+            <div
               className="inline-block px-4 py-2 rounded-full text-white text-sm font-semibold mb-4 w-fit"
               style={{ backgroundColor: servicio.categoria.color }}
             >
@@ -61,9 +71,10 @@ export default async function ServicioDetallePage({ params }) {
         </div>
       </div>
 
+      {/* ================= CONTENIDO ================= */}
       <div className="container mx-auto px-4 py-8">
         <div className="grid lg:grid-cols-3 gap-8">
-          {/* Columna principal */}
+          {/* ===== COLUMNA PRINCIPAL ===== */}
           <div className="lg:col-span-2 space-y-8">
             <section>
               <h2 className="text-2xl font-bold mb-4">
@@ -77,16 +88,24 @@ export default async function ServicioDetallePage({ params }) {
             {/* Ubicación */}
             <section>
               <h2 className="text-2xl font-bold mb-4">Ubicación</h2>
+
               <div className="bg-gray-100 p-6 rounded-lg">
                 <div className="flex items-start gap-3 mb-4">
-                  <MapPin size={24} className="text-blue-600 flex-shrink-0 mt-1" />
+                  <MapPin
+                    size={24}
+                    className="text-blue-600 flex-shrink-0 mt-1"
+                  />
                   <div>
-                    <p className="font-semibold mb-1">{servicio.direccion}</p>
+                    <p className="font-semibold mb-1">
+                      {servicio.direccion}
+                    </p>
+
                     {servicio.distrito && (
                       <p className="text-gray-600 text-sm">
                         {servicio.distrito}
                       </p>
                     )}
+
                     {servicio.referencia && (
                       <p className="text-gray-600 text-sm mt-2">
                         {servicio.referencia}
@@ -96,7 +115,11 @@ export default async function ServicioDetallePage({ params }) {
                 </div>
 
                 <div className="space-y-2">
-                  <Button href="/mapa" variant="primary" className="w-full">
+                  <Button
+                    href="/mapa"
+                    variant="primary"
+                    className="w-full"
+                  >
                     Ver en mapa
                   </Button>
 
@@ -113,10 +136,10 @@ export default async function ServicioDetallePage({ params }) {
             </section>
           </div>
 
-          {/* Sidebar */}
+          {/* ===== SIDEBAR ===== */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-lg shadow-lg p-6 sticky top-4 space-y-6">
-              <h3 className="text-xl font-bold mb-4">
+              <h3 className="text-xl font-bold">
                 Información de Contacto
               </h3>
 
@@ -126,14 +149,14 @@ export default async function ServicioDetallePage({ params }) {
                     <Clock size={20} className="text-blue-600" />
                     <h4 className="font-semibold">Horario</h4>
                   </div>
-                  <p className="text-gray-700">{servicio.horario}</p>
+                  <p className="text-gray-700">
+                    {servicio.horario}
+                  </p>
                 </div>
               )}
 
-              {/* Botón favoritos */}
-              <Button variant="outline" className="w-full">
-                ❤️ Agregar a favoritos
-              </Button>
+              {/* ⭐ FAVORITOS */}
+              <BotonFavorito sitioId={servicio.id} />
             </div>
           </div>
         </div>

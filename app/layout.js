@@ -2,6 +2,7 @@ import 'leaflet/dist/leaflet.css';
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { FavoritosProvider } from "@/contexts/FavoritosContext"; // ← AGREGAR
 
 export const metadata = {
   title: "Patrimonio Cultural de Ayacucho",
@@ -12,11 +13,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="es">
       <body className="antialiased">
-        <Header />
-        <main className="min-h-screen">
-          {children}
-        </main>
-        <Footer />
+        <FavoritosProvider> {/* ← AGREGAR */}
+          <Header />
+          <main className="min-h-screen">
+            {children}
+          </main>
+          <Footer />
+        </FavoritosProvider> {/* ← AGREGAR */}
       </body>
     </html>
   );

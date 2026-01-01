@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Clock, Ticket, MapPin, Camera } from 'lucide-react';
 import Card from '../ui/Card';
+import BotonFavorito from './BotonFavorito'; // ← AGREGAR
 
 export default function SitioCard({ sitio }) {
   return (
@@ -14,6 +15,9 @@ export default function SitioCard({ sitio }) {
             className="w-full h-full object-cover hover:scale-110 transition duration-300"
           />
           
+          {/* Botón de favorito */}
+          <BotonFavorito sitioId={sitio.id} variante="card" /> {/* ← AGREGAR */}
+          
           {/* Badge de categoría */}
           <div 
             className="absolute top-3 left-3 px-3 py-1 rounded-full text-white text-xs font-semibold"
@@ -24,12 +28,14 @@ export default function SitioCard({ sitio }) {
 
           {/* Badge de fotos históricas */}
           {sitio.imagenPrincipalAntigua && (
-            <div className="absolute top-3 right-3 bg-amber-900 text-white px-2 py-1 rounded-full text-xs font-semibold flex items-center gap-1">
+            <div className="absolute bottom-3 right-3 bg-amber-900 text-white px-2 py-1 rounded-full text-xs font-semibold flex items-center gap-1">
               <Camera size={12} />
               Fotos históricas
             </div>
           )}
         </div>
+
+        {/* Resto del código igual... */}
 
         {/* Contenido */}
         <div className="p-4">

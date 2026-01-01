@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { MapPin, Phone, Wifi, CreditCard, Car } from 'lucide-react';
 import Card from '../ui/Card';
+import BotonFavorito from '../sitios/BotonFavorito'; // ← AGREGAR
 
 export default function ServicioCard({ servicio }) {
   return (
@@ -8,11 +9,14 @@ export default function ServicioCard({ servicio }) {
       <Link href={`/servicios/${servicio.slug}`}>
         {/* Imagen */}
         <div className="relative h-48 overflow-hidden">
-          <img 
+          <img
             src={servicio.imagenPrincipal} 
             alt={servicio.nombre}
             className="w-full h-full object-cover hover:scale-110 transition duration-300"
           />
+          
+          {/* Botón de favorito */}
+          <BotonFavorito sitioId={servicio.id} variante="card" /> {/* ← AGREGAR */}
           
           {/* Badge de categoría */}
           <div 
@@ -22,6 +26,8 @@ export default function ServicioCard({ servicio }) {
             {servicio.categoria.nombre}
           </div>
         </div>
+
+        {/* Resto del código igual... */}
 
         {/* Contenido */}
         <div className="p-4">

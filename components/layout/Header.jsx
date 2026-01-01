@@ -1,17 +1,20 @@
 'use client';
 
-import Link from 'next/link';
 import { useState } from 'react';
+import Link from 'next/link';
 import { Menu, X, Heart, MapPin } from 'lucide-react';
+
 import BuscadorGlobal from './BuscadorGlobal';
+import { useFavoritos } from '@/hooks/useFavoritos';
 
 export default function Header() {
   const [menuAbierto, setMenuAbierto] = useState(false);
+  const { cantidadFavoritos } = useFavoritos();
 
   return (
     <header className="sticky top-0 z-50 bg-white shadow-md">
       <div className="container mx-auto px-4">
-        {/* Desktop */}
+        {/* ================= DESKTOP ================= */}
         <div className="hidden lg:flex items-center justify-between py-4 gap-6">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 flex-shrink-0">
@@ -20,7 +23,9 @@ export default function Header() {
               <h1 className="text-xl font-bold text-amber-900">
                 Patrimonio Ayacucho
               </h1>
-              <p className="text-xs text-gray-600">Descubre nuestra historia</p>
+              <p className="text-xs text-gray-600">
+                Descubre nuestra historia
+              </p>
             </div>
           </Link>
 
@@ -43,27 +48,35 @@ export default function Header() {
             <Link href="/rutas" className="text-gray-700 hover:text-amber-700 transition text-sm">
               Rutas
             </Link>
-            <Link 
-              href="/mapa" 
+            <Link
+              href="/mapa"
               className="px-4 py-2 bg-amber-700 text-white rounded-lg hover:bg-amber-800 transition font-medium text-sm"
             >
               Mapa
             </Link>
-            <Link href="/emergencias" className="text-red-600 hover:text-red-700 transition font-medium text-sm">
+            <Link
+              href="/emergencias"
+              className="text-red-600 hover:text-red-700 transition font-medium text-sm"
+            >
               Emergencias
             </Link>
           </nav>
 
-          {/* Favoritos */}
-          <Link href="/favoritos" className="relative p-2 hover:bg-gray-100 rounded-full transition flex-shrink-0">
+          {/* Favoritos - Desktop */}
+          <Link
+            href="/favoritos"
+            className="relative p-2 hover:bg-gray-100 rounded-full transition flex-shrink-0"
+          >
             <Heart size={24} className="text-gray-700" />
-            <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-              0
-            </span>
+            {cantidadFavoritos > 0 && (
+              <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                {cantidadFavoritos}
+              </span>
+            )}
           </Link>
         </div>
 
-        {/* Móvil */}
+        {/* ================= MÓVIL ================= */}
         <div className="lg:hidden py-3">
           <div className="flex items-center justify-between mb-3">
             <button onClick={() => setMenuAbierto(!menuAbierto)}>
@@ -72,14 +85,19 @@ export default function Header() {
 
             <Link href="/" className="flex items-center gap-2">
               <MapPin className="text-amber-700" size={28} />
-              <span className="font-bold text-amber-900">Patrimonio Ayacucho</span>
+              <span className="font-bold text-amber-900">
+                Patrimonio Ayacucho
+              </span>
             </Link>
 
+            {/* Favoritos - Móvil */}
             <Link href="/favoritos" className="relative">
               <Heart size={24} className="text-gray-700" />
-              <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                0
-              </span>
+              {cantidadFavoritos > 0 && (
+                <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                  {cantidadFavoritos}
+                </span>
+              )}
             </Link>
           </div>
 
@@ -87,7 +105,7 @@ export default function Header() {
           <BuscadorGlobal />
         </div>
 
-        {/* Menú móvil */}
+        {/* ================= MENÚ MÓVIL ================= */}
         {menuAbierto && (
           <nav className="lg:hidden pb-4 space-y-2">
             <Link href="/" className="block py-2 text-gray-700 hover:text-amber-700">
@@ -102,10 +120,16 @@ export default function Header() {
             <Link href="/rutas" className="block py-2 text-gray-700 hover:text-amber-700">
               Rutas Temáticas
             </Link>
-            <Link href="/mapa" className="block py-2 bg-amber-700 text-white rounded-lg text-center font-medium">
+            <Link
+              href="/mapa"
+              className="block py-2 bg-amber-700 text-white rounded-lg text-center font-medium"
+            >
               Ver Mapa
             </Link>
-            <Link href="/emergencias" className="block py-2 text-red-600 hover:text-red-700 font-medium">
+            <Link
+              href="/emergencias"
+              className="block py-2 text-red-600 hover:text-red-700 font-medium"
+            >
               Emergencias
             </Link>
           </nav>

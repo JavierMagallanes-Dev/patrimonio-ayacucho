@@ -1,17 +1,16 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useEffect, useState, Suspense } from 'react';
 import SitioGrid from '@/components/sitios/SitioGrid';
 import Loader from '@/components/ui/Loader';
 import { Filter } from 'lucide-react';
 
-export default function SitiosPage() {
+// Componente interno con la lógica
+function SitiosContent() {
   const [sitios, setSitios] = useState([]);
   const [categorias, setCategorias] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filtroCategoria, setFiltroCategoria] = useState('');
-  const searchParams = useSearchParams();
 
   useEffect(() => {
     cargarDatos();
@@ -20,12 +19,10 @@ export default function SitiosPage() {
   async function cargarDatos() {
     setLoading(true);
     try {
-      // Cargar categorías de patrimonio
       const resCategorias = await fetch('/api/categorias?tipo=patrimonio');
       const dataCategorias = await resCategorias.json();
       setCategorias(dataCategorias);
 
-      // Cargar sitios
       let url = '/api/sitios?tipo=patrimonio';
       if (filtroCategoria) {
         url += `&categoria=${filtroCategoria}`;
@@ -104,5 +101,14 @@ export default function SitiosPage() {
       {/* Grid de sitios */}
       <SitioGrid sitios={sitios} />
     </div>
+  );
+}
+
+// Componente principal exportado con Suspense
+export default function SitiosPage() {
+  return (
+    <Suspense fallback={<Loader />}>
+      <SitiosContent />
+    </Suspense>
   );
 }

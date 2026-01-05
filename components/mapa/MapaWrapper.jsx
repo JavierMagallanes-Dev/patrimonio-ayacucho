@@ -7,7 +7,7 @@ const MapaInteractivo = dynamic(
   () => import('./MapaInteractivo'),
   { 
     ssr: false,
-    loading: () => <Loader />
+    loading: () => <Loader mensaje="Cargando mapa..." />
   }
 );
 

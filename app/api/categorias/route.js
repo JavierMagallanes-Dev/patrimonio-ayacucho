@@ -1,6 +1,10 @@
 import { prisma } from '@/lib/prisma';
 import { NextResponse } from 'next/server';
 
+// Forzar renderizado dinámico
+export const dynamic = 'force-dynamic';
+export const revalidate = 3600;
+
 export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url);

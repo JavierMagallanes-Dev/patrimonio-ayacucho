@@ -1,6 +1,6 @@
 import { prisma } from '@/lib/prisma';
 import { NextResponse } from 'next/server';
-
+export const dynamic = 'force-dynamic';
 export async function GET(request, { params }) {
   try {
     // IMPORTANTE: En Next.js 16, params es una Promise

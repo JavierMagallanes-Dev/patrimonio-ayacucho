@@ -16,7 +16,8 @@
     "next": "16.1.1",
     "react": "19.2.3",
     "react-dom": "19.2.3",
-    "react-leaflet": "^5.0.0"
+    "react-leaflet": "^5.0.0",
+    "yet-another-react-lightbox": "^3.28.0"
   },
   "devDependencies": {
     "@prisma/client": "^5.22.0",
@@ -27,7 +28,4 @@
     "prisma": "^5.22.0",
     "tailwindcss": "^4"
   }
-  
-  
-
 }

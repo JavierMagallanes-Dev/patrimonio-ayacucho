@@ -108,7 +108,8 @@ html {
     0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
-/* Agregar al final de globals.css */
+
+/* Animación slide-down */
 @keyframes slide-down {
   from {
     transform: translate(-50%, -100%);
@@ -122,4 +123,39 @@ html {
 
 .animate-slide-down {
   animation: slide-down 0.3s ease-out;
+}
+
+/* =====================================================
+   ✨ ESTILOS PARA GALERÍAS HISTÓRICAS (PASO FINAL)
+===================================================== */
+
+/* Efecto sepia para fotos históricas */
+.sepia {
+  filter: sepia(0.5) contrast(1.1);
+}
+
+/* Estilos para el lightbox */
+.yarl__root {
+  --yarl__color_backdrop: rgba(0, 0, 0, 0.9);
+}
+
+/* Mejorar el cursor del comparador */
+.cursor-ew-resize {
+  cursor: ew-resize;
+}
+
+/* Animación para las galerías */
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-in-scale {
+  animation: fadeInScale 0.3s ease-out;
 }

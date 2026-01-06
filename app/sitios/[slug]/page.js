@@ -6,6 +6,11 @@ import Button from '@/components/ui/Button';
 import MiniMapa from '@/components/mapa/MiniMapa';
 import BotonFavorito from '@/components/sitios/BotonFavorito';
 
+// ✅ NUEVOS COMPONENTES
+import ComparadorImagenes from '@/components/sitios/ComparadorImagenes';
+import GaleriaImagenes from '@/components/sitios/GaleriaImagenes';
+import GaleriaHistorica from '@/components/sitios/GaleriaHistorica';
+
 /* ================================
    Obtener sitio por slug
 ================================ */
@@ -87,7 +92,35 @@ export default async function SitioDetallePage(props) {
               </p>
             </section>
 
-            {/* Ubicación */}
+            {/* ================= GALERÍA ACTUAL ================= */}
+            {sitio.imagenesGaleriaActuales &&
+              sitio.imagenesGaleriaActuales.length > 0 && (
+                <GaleriaImagenes
+                  imagenes={sitio.imagenesGaleriaActuales}
+                  titulo="Galería Fotográfica"
+                />
+              )}
+
+            {/* ================= COMPARADOR HISTÓRICO ================= */}
+            {sitio.imagenPrincipalAntigua && (
+              <ComparadorImagenes
+                imagenActual={sitio.imagenPrincipal}
+                imagenAntigua={sitio.imagenPrincipalAntigua}
+                anioAntigua={sitio.anioImagenAntigua}
+                fuenteAntigua={sitio.fuenteImagenAntigua}
+                descripcionAntigua={sitio.descripcionImagenAntigua}
+              />
+            )}
+
+            {/* ================= GALERÍA HISTÓRICA ================= */}
+            {sitio.imagenesGaleriaAntiguas &&
+              sitio.imagenesGaleriaAntiguas.length > 0 && (
+                <GaleriaHistorica
+                  imagenes={sitio.imagenesGaleriaAntiguas}
+                />
+              )}
+
+            {/* ================= UBICACIÓN ================= */}
             <section>
               <h2 className="text-2xl font-bold mb-4">Ubicación</h2>
 

@@ -4,7 +4,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { FavoritosProvider } from "@/contexts/FavoritosContext";
 import OfflineIndicator from "@/components/ui/OfflineIndicator";
-
+import BannerEventoActivo from "@/components/eventos/BannerEventoActivo";
 export const metadata = {
   title: "Patrimonio Cultural de Ayacucho",
   description: "Descubre el patrimonio cultural e histórico de Ayacucho, Perú. Explora sitios patrimoniales, rutas temáticas y servicios turísticos.",
@@ -41,6 +41,7 @@ export default function RootLayout({ children }) {
       <body className="antialiased">
         <FavoritosProvider>
           <OfflineIndicator />
+           <BannerEventoActivo />
           <Header />
           <main className="min-h-screen">
             {children}

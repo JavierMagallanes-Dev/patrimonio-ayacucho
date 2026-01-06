@@ -112,6 +112,7 @@ model Sitio {
 
   // Relaciones
   sitiosEnRutas SitioRuta[]
+  eventos       Evento[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -184,4 +185,62 @@ model SitioRuta {
   @@unique([rutaId, sitioId])
   @@index([rutaId])
   @@index([sitioId])
+}
+
+// ==========================================
+// TABLA: EVENTOS Y FESTIVIDADES
+// ==========================================
+model Evento {
+  id               String @id @default(cuid())
+  slug             String @unique
+  nombre           String
+  descripcion      String @db.Text
+  descripcionCorta String @db.VarChar(200)
+
+  // Tipo de evento
+  tipoEvento String // "festividad", "cultural", "religioso", "gastronomico", "artistico"
+
+  // Fechas
+  fechaInicio DateTime
+  fechaFin    DateTime
+  esAnual     Boolean  @default(false) // Si se repite cada año
+  mesEvento   Int? // Mes en que ocurre (1-12) si es anual
+
+  // Ubicación
+  sitioId          String? // Si está asociado a un sitio específico
+  sitio            Sitio?  @relation(fields: [sitioId], references: [id])
+  ubicacionGeneral String? // "Centro de Ayacucho", "Todo Ayacucho"
+
+  // Detalles
+  horario      String?
+  programacion Json? // Array de actividades: [{hora, actividad, lugar}]
+
+  // Multimedia
+  imagenPortada   String
+  imagenesGaleria Json?
+  videoUrl        String?
+
+  // Información práctica
+  entrada         String? // "Gratuito", "S/ 10", "Según actividad"
+  recomendaciones String? @db.Text
+  queTraer        Json? // ["bloqueador", "agua", "cámara"]
+
+  // Contacto e información
+  organizador String?
+  telefono    String?
+  email       String?
+  sitioWeb    String?
+
+  // Metadatos
+  destacado Boolean @default(false)
+  visible   Boolean @default(true)
+  orden     Int     @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([tipoEvento])
+  @@index([fechaInicio])
+  @@index([destacado])
+  @@index([mesEvento])
 }

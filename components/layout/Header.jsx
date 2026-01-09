@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Menu, X, Heart, MapPin } from 'lucide-react';
+import { Menu, X, Heart, MapPin, Calendar } from 'lucide-react';
 
 import BuscadorGlobal from './BuscadorGlobal';
 import { useFavoritos } from '@/hooks/useFavoritos';
@@ -48,6 +48,16 @@ export default function Header() {
             <Link href="/rutas" className="text-gray-700 hover:text-amber-700 transition text-sm">
               Rutas
             </Link>
+            
+            {/* ⭐ NUEVO: Enlace a Eventos */}
+            <Link 
+              href="/eventos" 
+              className="flex items-center gap-1 text-gray-700 hover:text-purple-600 transition text-sm"
+            >
+              <Calendar size={16} />
+              Eventos
+            </Link>
+            
             <Link
               href="/mapa"
               className="px-4 py-2 bg-amber-700 text-white rounded-lg hover:bg-amber-800 transition font-medium text-sm"
@@ -120,6 +130,16 @@ export default function Header() {
             <Link href="/rutas" className="block py-2 text-gray-700 hover:text-amber-700">
               Rutas Temáticas
             </Link>
+            
+            {/* ⭐ NUEVO: Enlace a Eventos en móvil */}
+            <Link 
+              href="/eventos" 
+              className="flex items-center gap-2 py-2 text-gray-700 hover:text-purple-600"
+            >
+              <Calendar size={20} />
+              Festividades y Eventos
+            </Link>
+            
             <Link
               href="/mapa"
               className="block py-2 bg-amber-700 text-white rounded-lg text-center font-medium"

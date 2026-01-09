@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { MapPin, Church, Building2, Route, Shield } from 'lucide-react';
+import { MapPin, Church, Building2, Route, Shield, Calendar } from 'lucide-react';
 
 export default function Home() {
   return (
@@ -37,7 +37,7 @@ export default function Home() {
         <h2 className="text-3xl font-bold text-center mb-12">
           Explora por Categoría
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
           <Link href="/sitios?tipo=patrimonio" className="group">
             <div className="bg-amber-50 p-8 rounded-xl border-2 border-amber-200 hover:border-amber-400 transition text-center">
               <Church size={48} className="mx-auto mb-4 text-amber-700 group-hover:scale-110 transition" />
@@ -62,6 +62,15 @@ export default function Home() {
             </div>
           </Link>
 
+          {/* ⭐ NUEVO: Card de Eventos */}
+          <Link href="/eventos" className="group">
+            <div className="bg-purple-50 p-8 rounded-xl border-2 border-purple-200 hover:border-purple-400 transition text-center">
+              <Calendar size={48} className="mx-auto mb-4 text-purple-700 group-hover:scale-110 transition" />
+              <h3 className="text-xl font-bold mb-2">Eventos</h3>
+              <p className="text-gray-600 text-sm">Festividades y celebraciones</p>
+            </div>
+          </Link>
+
           <Link href="/emergencias" className="group">
             <div className="bg-red-50 p-8 rounded-xl border-2 border-red-200 hover:border-red-400 transition text-center">
               <Shield size={48} className="mx-auto mb-4 text-red-700 group-hover:scale-110 transition" />
@@ -75,7 +84,7 @@ export default function Home() {
       {/* Estadísticas */}
       <section className="bg-amber-900 text-white py-16">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+          <div className="grid grid-cols-2 lg:grid-cols-5 gap-8 text-center">
             <div>
               <div className="text-4xl font-bold mb-2">11+</div>
               <div className="text-amber-200">Sitios Registrados</div>
@@ -87,6 +96,11 @@ export default function Home() {
             <div>
               <div className="text-4xl font-bold mb-2">1+</div>
               <div className="text-amber-200">Rutas Temáticas</div>
+            </div>
+            {/* ⭐ NUEVO: Estadística de eventos */}
+            <div>
+              <div className="text-4xl font-bold mb-2">5+</div>
+              <div className="text-amber-200">Eventos Anuales</div>
             </div>
             <div>
               <div className="text-4xl font-bold mb-2">5</div>

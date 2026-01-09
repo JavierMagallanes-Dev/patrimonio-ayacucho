@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { MapPin, Mail, Phone, Shield, Heart } from 'lucide-react';
+import { MapPin, Mail, Phone, Shield, Heart, Calendar } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -37,6 +37,13 @@ export default function Footer() {
               <li>
                 <Link href="/rutas" className="hover:text-amber-500 transition">
                   Rutas Temáticas
+                </Link>
+              </li>
+              {/* ⭐ NUEVO: Enlace a Eventos */}
+              <li>
+                <Link href="/eventos" className="hover:text-purple-400 transition flex items-center gap-2">
+                  <Calendar size={14} />
+                  Festividades y Eventos
                 </Link>
               </li>
               <li>
